@@ -1,0 +1,27 @@
+{% extends 'users/admin/admin_home.html' %}
+{% block content2 %}
+
+
+
+<form method="post" action='{% url 'addadmin' %}' enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="row">
+      <div class="col-md-6">
+        {{ data3.as_p }}
+        {{ data4.as_p }}
+      </div>
+      <div class="col-md-6">
+          
+      </div>
+      
+    </div>
+  
+  
+
+
+  <div class="row">
+          <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+
+{% endblock content2 %}

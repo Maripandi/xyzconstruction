@@ -1,0 +1,223 @@
+{% extends 'base/pageheader.html' %}
+
+{% load static %}
+{% block title %} | blog | our projects{% endblock title %}
+{% block page_header %} Our Recent project updates are here{% endblock page_header %}
+{% block page_header_name %} blogger{% endblock page_header_name %}
+{% block content2 %}
+
+
+{% include 'base/msg.html' %}
+<!-- Projects Start -->
+<div class="container-xxl py-5">
+
+
+  
+
+  {% for j in data %}
+  <!-- Modal -->
+    <div class="modal fade" id="exampleModal{{ j.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{ j.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-start" id="exampleModalLabel{{ j.id }}"><i>posted by @{{ j.posted_by.username }}</i> </span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="h4"><i>posted by @{{ j.posted_by.username }}</i></h4>
+
+            
+                    <h2 class="card-title">{{ j.title }} </h2>
+   
+                    
+                    <div class="card text-center">
+                        <div class="card-header">
+                          After KC
+                        </div>
+                        <div class="card-body">
+                            <img src="{{ j.current_pic.url }}" class="img-responsive rounded" style="width: 100%;" />
+                        </div>
+                        
+                    </div>
+                    <br>
+                    
+                    <div class="card text-center">
+                        <div class="card-header">
+                          Before Our work
+                        </div>
+                        <div class="card-body">
+                            <img src="{{ j.old_pic.url }}" class="img-responsive rounded" style="width: 100%; float: left; margin-right: 10px;" />
+                        </div>
+                        
+                    </div>
+          
+                    <br>
+            
+                    <p class="card-text text-dark bg-light" ><pre> {{ j.updates }}</pre></p>
+
+
+       
+                    <hr>
+                    <span class="float-start"><i>Last updated at {{ j.updated_at }}</i> </span>
+                    <span class="float-end"><i>Created at {{ j.created_at }}</i> </span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  {% endfor %}
+
+
+
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+    </button>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, velit.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Read more</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+  <div class="container">
+
+    {% if user.is_authenticated %}
+        {% include 'blogpost.html' %}
+    {% else %}
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <h6 class="text-primary">Our Projects</h6>
+            <h1 class="mb-4">Visit Our Latest Solar And Renewable Energy Projects</h1>
+        </div>
+    {% endif %} 
+      
+      <div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
+          <div class="col-12 text-center">
+              <ul class="list-inline mb-5" id="portfolio-flters">
+                  <li class="mx-2 active" data-filter="*">All</li>
+                  <li class="mx-2" data-filter=".first">Solar Panels</li>
+                  <li class="mx-2" data-filter=".second">Wind Turbines</li>
+                  <li class="mx-2" data-filter=".third">Hydropower Plants</li>
+              </ul>
+          </div>
+      </div>
+      <div class="row g-4 portfolio-container wow fadeInUp" data-wow-delay="0.5s">
+
+        {% for i in data %}
+          <div class="col-lg-4 col-md-6 portfolio-item first"> 
+              <div class="portfolio-img rounded overflow-hidden">
+                  <img class="img-fluid" src="{{ i.current_pic.url }}" alt="">
+                  <div class="portfolio-btn">
+                      <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1" href="{{ i.current_pic.url }}" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
+                      <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1" data-toggle="modal" data-target="#exampleModal{{ i.id }}" href=""><i class="fa fa-link"></i></a>
+                  </div>
+              </div>
+              <div class="pt-3">
+                  <p class="text-primary mb-0">{{ i.title }}   <span class="float-end"><i>posted at {{ i.created_at }}</i> </span></p>
+                  <hr class="text-primary w-100">
+              </div>
+          </div>
+          {% endfor %}
+          <div class="col-lg-4 col-md-6 portfolio-item second">
+              <div class="portfolio-img rounded overflow-hidden">
+                  <img class="img-fluid" src="{% static 'asserts/img/img-600x400-5.jpg' %}" alt="">
+                  <div class="portfolio-btn">
+                      <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1" href="{% static 'asserts/img/img-600x400-5.jpg' %}" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
+                      <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1" href=""><i class="fa fa-link"></i></a>
+                  </div>
+              </div>
+              <div class="pt-3">
+                  <p class="text-primary mb-0">Wind Turbines</p>
+                  <hr class="text-primary w-25 my-2">
+                  <h5 class="lh-base">We Are pioneers of solar & renewable energy industry</h5>
+              </div>
+          </div>
+          <div class="col-lg-4 col-md-6 portfolio-item third">
+              <div class="portfolio-img rounded overflow-hidden">
+                  <img class="img-fluid" src="{% static 'asserts/img/img-600x400-4.jpg' %}" alt="">
+                  <div class="portfolio-btn">
+                      <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1" href="{% static 'asserts/img/img-600x400-4.jpg' %}" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
+                      <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1" href=""><i class="fa fa-link"></i></a>
+                  </div>
+              </div>
+              <div class="pt-3">
+                  <p class="text-primary mb-0">Hydropower Plants</p>
+                  <hr class="text-primary w-25 my-2">
+                  <h5 class="lh-base">We Are pioneers of solar & renewable energy industry</h5>
+              </div>
+          </div>
+          <div class="col-lg-4 col-md-6 portfolio-item first">
+              <div class="portfolio-img rounded overflow-hidden">
+                  <img class="img-fluid" src="{% static 'asserts/img/img-600x400-3.jpg' %}" alt="">
+                  <div class="portfolio-btn">
+                      <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1" href="{% static 'asserts/img/img-600x400-3.jpg' %}" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
+                      <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1" href=""><i class="fa fa-link"></i></a>
+                  </div>
+              </div>
+              <div class="pt-3">
+                  <p class="text-primary mb-0">Solar Panels</p>
+                  <hr class="text-primary w-25 my-2">
+                  <h5 class="lh-base">We Are pioneers of solar & renewable energy industry</h5>
+              </div>
+          </div>
+          <div class="col-lg-4 col-md-6 portfolio-item second">
+              <div class="portfolio-img rounded overflow-hidden">
+                  <img class="img-fluid" src="{% static 'asserts/img/img-600x400-2.jpg' %}" alt="">
+                  <div class="portfolio-btn">
+                      <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1" href="{% static 'asserts/img/img-600x400-2.jpg' %}" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
+                      <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1" href=""><i class="fa fa-link"></i></a>
+                  </div>
+              </div>
+              <div class="pt-3">
+                  <p class="text-primary mb-0">Wind Turbines</p>
+                  <hr class="text-primary w-25 my-2">
+                  <h5 class="lh-base">We Are pioneers of solar & renewable energy industry</h5>
+              </div>
+          </div>
+          <div class="col-lg-4 col-md-6 portfolio-item third">
+              <div class="portfolio-img rounded overflow-hidden">
+                  <img class="img-fluid" src="{% static 'asserts/img/img-600x400-1.jpg' %}" alt="">
+                  <div class="portfolio-btn">
+                      <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1" href="{% static 'asserts/img/img-600x400-1.jpg' %}" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
+                      <a class="btn btn-lg-square btn-outline-light rounded-circle mx-1" href=""><i class="fa fa-link"></i></a>
+                  </div>
+              </div>
+              <div class="pt-3">
+                  <p class="text-primary mb-0">Hydropower Plants</p>
+                  <hr class="text-primary w-25 my-2">
+                  <h5 class="lh-base">We Are pioneers of solar & renewable energy industry</h5>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- Projects End -->
+
+
+      
+
+     
+
+      
+         
+
+
+
+{% endblock content2%}

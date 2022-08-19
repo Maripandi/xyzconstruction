@@ -1,0 +1,109 @@
+{% extends 'base/pageheader.html' %}
+{% block title %}Admin {% endblock title %}
+{% block page_header %} Welcome back..! {{ user.username }}{% endblock page_header %}
+{% block page_header_name %} blogger{% endblock page_header_name %}
+{% block content3 %}
+{% include 'base/msg.html' %}
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    .topnav {
+        background-color: #333;
+        overflow: hidden;
+      }
+      
+      /* Style the links inside the navigation bar */
+      .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+      }
+      
+      /* Change the color of links on hover */
+      .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+      
+      /* Add a color to the active/current link */
+      .topnav a.active {
+        background-color: #8ed27b;
+        color: white;
+      }
+    </style>
+    <div class="container">
+        <div class="topnav">
+            <a class="active" href="{% url 'adminhome' %}">Home</a>
+            <a href="{% url 'manage_emp' %}">employee</a>
+            <a href="{% url 'addemp' %}">add emp</a>
+            <a href="{% url 'addadmin' %}">add admin</a>
+            <a href="#contact">Contact</a>
+            <a href="#about">About</a>
+
+          </div> 
+    </div>
+
+
+
+
+    
+{% endblock content3 %}
+{% block content2 %}
+
+
+
+{% block adduser %}
+
+
+{% endblock adduser %}
+
+
+
+<h3>Admins</h3>
+
+<div class="container-xxl py-5">
+  <div class="container">
+      <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+          <h6 class="text-primary">Team Member</h6>
+          <h1 class="mb-4">Experienced Team Members</h1>
+      </div>
+      {{ data }}
+      <div class="row g-4">
+          {% for i in data %}
+
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+              <div class="team-item rounded overflow-hidden">
+                  <div class="d-flex">
+                      <img class="img-fluid w-75" src="{{ i.profile_pic.url }}" alt="">
+                      <div class="team-social w-25">
+                          <a class="btn btn-lg-square btn-outline-primary rounded-circle mt-3" href=""><i class="fab fa-twitter"></i></a>
+                          <a class="btn btn-lg-square btn-outline-primary rounded-circle mt-3" href=""><i class="fab fa-instagram"></i></a>
+                          <a class="btn btn-lg-square btn-outline-primary rounded-circle mt-3" href=""><i class="fab fa-facebook-f"></i></a>
+                          <a class="btn btn-lg-square btn-outline-info rounded-circle mt-3" href=""><i class="bi bi-pencil"></i></a>
+                          <a class="btn btn-lg-square btn-outline-danger rounded-circle mt-3" href=""><i class="fa fa-trash"></i></a>
+                          
+                         
+                      </div>
+                  </div>
+                  <div class="p-4">
+                      <h5>{{ i.user.first_name }} {{i.user.last_name }} - <span>{{ i.user.username }}</span></h5>
+                      <span>Designation : xyz</span><br>
+                      <span>Phone Number : {{ i.admin_phon }}</span>
+                      <pre>Address :{{ i.admin_address }}</pre>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+          
+          
+      </div>
+  </div>
+</div>
+<!-- Team End -->
+{% endblock content2 %}
